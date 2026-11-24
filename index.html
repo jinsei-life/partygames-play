@@ -14,9 +14,6 @@
     #loading { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #FFD43B; font: 900 28px "Hiragino Sans", "Yu Gothic", sans-serif; background: #0F4C36; z-index: 2; }
     #bar { width: 60vw; height: 12px; background: rgba(255,255,255,.2); border-radius: 6px; margin-top: 16px; overflow: hidden; }
     #fill { width: 0; height: 100%; background: #FFD43B; }
-    #rotate { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; flex-direction: column; color: #fff; font: 900 26px "Hiragino Sans", "Yu Gothic", sans-serif; background: rgba(15,76,54,.96); z-index: 3; text-align: center; }
-    #rotate span { font-size: 64px; margin-bottom: 12px; }
-    @media (orientation: portrait) and (max-width: 900px) { #rotate { display: flex; } }
   </style>
   <!-- オンライン対戦（WebRTC）用。無料の PeerJS サーバーで相手を見つける -->
   <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
@@ -24,7 +21,6 @@
 <body>
   <canvas id="unity-canvas" tabindex="-1"></canvas>
   <div id="loading">読み込み中… <span id="pct">0%</span><div id="bar"><div id="fill"></div></div></div>
-  <div id="rotate"><span>📱↻</span>スマホを横向きにしてね</div>
   <script src="Build/WebGL.loader.js"></script>
   <script>
     var pct = document.getElementById("pct"), fill = document.getElementById("fill");
