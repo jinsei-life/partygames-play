@@ -21,26 +21,35 @@
 <body>
   <canvas id="unity-canvas" tabindex="-1"></canvas>
   <div id="loading">読み込み中… <span id="pct">0%</span><div id="bar"><div id="fill"></div></div></div>
-  <script src="Build/WebGL.loader.js"></script>
+  <script src="Build/5923af1ab5f4bd4df541f8d5db049af4.loader.js"></script>
   <script>
     var pct = document.getElementById("pct"), fill = document.getElementById("fill");
     createUnityInstance(document.getElementById("unity-canvas"), {
-      dataUrl: "Build/WebGL.data.unityweb",
-      frameworkUrl: "Build/WebGL.framework.js.unityweb",
-      codeUrl: "Build/WebGL.wasm.unityweb",
+      dataUrl: "Build/854279cda7c3806f3835be3e2469b061.data.unityweb",
+      frameworkUrl: "Build/fe29ea03cb67208b0a1754cde98fa8bc.framework.js.unityweb",
+      codeUrl: "Build/eb55b04345df4b5a4209f9161fae718b.wasm.unityweb",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "DefaultCompany",
       productName: "パーティーゲーム",
       productVersion: "1.0",
       matchWebGLToCanvasSize: true,
       devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+      // 動かなくなったとき、真っ黒のままにせず理由を画面に出す
+      showBanner: function (msg, type) {
+        if (type !== "error") return;
+        var d = document.getElementById("err") || document.createElement("div");
+        d.id = "err";
+        d.style.cssText = "position:fixed;left:0;right:0;top:0;padding:16px;background:#C0392B;color:#fff;font:700 16px sans-serif;z-index:9;white-space:pre-wrap";
+        d.textContent = "エラーが起きました。アプリを閉じて開き直してください。\n" + msg;
+        document.body.appendChild(d);
+      },
     }, function (p) {
       pct.textContent = Math.round(p * 100) + "%";
       fill.style.width = Math.round(p * 100) + "%";
     }).then(function () {
       document.getElementById("loading").remove();
     }).catch(function (e) {
-      pct.textContent = "読み込めませんでした：" + e;
+      pct.textContent = "読み込めませんでした。閉じて開き直してください：" + e;
     });
   </script>
 </body>
