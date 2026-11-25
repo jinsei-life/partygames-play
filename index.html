@@ -57,6 +57,27 @@
   <div id="loading">読み込み中… <span id="pct">0%</span><div id="bar"><div id="fill"></div></div></div>
   <script src="Build/7674e256370a9ec6adbf1f8e3e14df2a.loader.js"></script>
   <script>
+    // iPhoneのホーム画面アプリは、画面の高さ（ページの大きさ）を本当より短く伝えることがあり、下にすき間ができる。
+    // そのときは、ゲームの画面を端末の画面の大きさそのものにする（iPhoneの screen.width/height は縦持ちの値）。
+    (function () {
+      if (!window.navigator.standalone) return;
+      var canvas = document.getElementById("unity-canvas");
+      function fit() {
+        var portrait = window.innerHeight >= window.innerWidth;
+        var w = portrait ? screen.width : screen.height;
+        var h = portrait ? screen.height : screen.width;
+        if (Math.abs(h - window.innerHeight) < 2 && Math.abs(w - window.innerWidth) < 2) {
+          canvas.style.width = ""; canvas.style.height = ""; canvas.style.bottom = ""; canvas.style.right = "";
+          return;
+        }
+        canvas.style.right = "auto"; canvas.style.bottom = "auto";
+        canvas.style.width = w + "px"; canvas.style.height = h + "px";
+      }
+      fit();
+      window.addEventListener("resize", fit);
+      window.addEventListener("orientationchange", function () { setTimeout(fit, 300); });
+      setInterval(fit, 1000);
+    })();
     var pct = document.getElementById("pct"), fill = document.getElementById("fill");
     if (window.pgOpeningOutside) {
       document.getElementById("loading").textContent = "ブラウザで開き直しています…";
