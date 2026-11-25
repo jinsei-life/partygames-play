@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <!-- 時計の帯はゲームと分ける（black-translucent だと、縦持ちのときiPhoneがページの高さを時計の帯の分だけ短く伝え、下にすき間ができる） -->
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="パーティー">
   <title>パーティーゲーム</title>
   <script>
@@ -20,7 +19,13 @@
     })();
   </script>
   <style>
-    html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #0F4C36; overflow: hidden; touch-action: none; -webkit-user-select: none; user-select: none; }
+    html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #0F4C36; touch-action: none; -webkit-user-select: none; user-select: none; }
+    body { overflow: hidden; }
+    /* iOS 26 のホーム画面アプリは、ページが画面より短いと、見える高さを時計の帯の分だけ短くしてしまい、下にすき間ができる。
+       ページの高さを時計の帯の分だけ足して、iPhoneに画面いっぱいを使わせる（100lvh を上限にして、足しすぎないようにする） */
+    @media (display-mode: standalone) {
+      html { min-height: min(100lvh, calc(100% + env(safe-area-inset-top, 0px))); }
+    }
     /* 画面いっぱい（上下左右を画面の端に合わせる。iPhoneのホーム画面アプリで 100vh が短くなり、下にすき間ができるため高さは指定しない） */
     #unity-canvas { position: fixed; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%; display: block; background: #0F4C36; }
     #loading { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #FFD43B; font: 900 28px "Hiragino Sans", "Yu Gothic", sans-serif; background: #0F4C36; z-index: 2; }
