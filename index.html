@@ -17,6 +17,27 @@
   </style>
   <!-- オンライン対戦（WebRTC）用。無料の PeerJS サーバーで相手を見つける -->
   <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+  <script>
+    // 中継サーバー（Metered の無料 TURN）。直接つながれない組み合わせ（iPhone と Android など）を中継する。
+    // パスワードが空のときは中継なし（直接つながれる組み合わせだけ）。
+    (function () {
+      var user = "d55f94416517d527fe27465c";
+      var pass = "hsutorgrdjrlzph4";
+      var servers = [
+        { urls: "stun:stun.l.google.com:19302" },
+        { urls: "stun:stun.relay.metered.ca:80" }
+      ];
+      if (pass) {
+        ["turn:global.relay.metered.ca:80",
+         "turn:global.relay.metered.ca:80?transport=tcp",
+         "turn:global.relay.metered.ca:443",
+         "turns:global.relay.metered.ca:443?transport=tcp"].forEach(function (u) {
+          servers.push({ urls: u, username: user, credential: pass });
+        });
+      }
+      window.pgIceServers = servers;
+    })();
+  </script>
 </head>
 <body>
   <canvas id="unity-canvas" tabindex="-1"></canvas>
@@ -26,7 +47,7 @@
     var pct = document.getElementById("pct"), fill = document.getElementById("fill");
     createUnityInstance(document.getElementById("unity-canvas"), {
       dataUrl: "Build/ae1337434a353c6815efd9d1ebee27ab.data.unityweb",
-      frameworkUrl: "Build/f90263af5fa4004b40ede6e555f434bc.framework.js.unityweb",
+      frameworkUrl: "Build/0ce2fca0be48da5b8808918c5b84bbba.framework.js.unityweb",
       codeUrl: "Build/75a348bbc7b6a0d6868d7b2899f28009.wasm.unityweb",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "DefaultCompany",
