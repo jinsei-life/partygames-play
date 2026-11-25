@@ -60,8 +60,20 @@
     // iPhoneのホーム画面アプリは、画面の高さ（ページの大きさ）を本当より短く伝えることがあり、下にすき間ができる。
     // そのときは、ゲームの画面を端末の画面の大きさそのものにする（iPhoneの screen.width/height は縦持ちの値）。
     (function () {
-      if (!window.navigator.standalone) return;
       var canvas = document.getElementById("unity-canvas");
+      // 【確認用・あとで消す】画面の大きさの数字を、画面のまん中あたりに出す
+      var dbg = document.createElement("div");
+      dbg.style.cssText = "position:fixed;left:8px;top:45%;padding:6px 10px;background:rgba(0,0,0,.75);color:#fff;font:13px monospace;white-space:pre;z-index:9;pointer-events:none";
+      document.body.appendChild(dbg);
+      setInterval(function () {
+        var r = canvas.getBoundingClientRect(), vv = window.visualViewport;
+        dbg.textContent = "inner " + innerWidth + "x" + innerHeight + "\nscreen " + screen.width + "x" + screen.height +
+          "\ndoc " + document.documentElement.clientWidth + "x" + document.documentElement.clientHeight +
+          "\nvv " + (vv ? Math.round(vv.width) + "x" + Math.round(vv.height) + "+" + Math.round(vv.offsetTop) : "-") +
+          "\ncanvas " + Math.round(r.left) + "," + Math.round(r.top) + " " + Math.round(r.width) + "x" + Math.round(r.height) +
+          "\nbuf " + canvas.width + "x" + canvas.height + " dpr " + devicePixelRatio + " sa " + (window.navigator.standalone ? 1 : 0);
+      }, 500);
+      if (!window.navigator.standalone) return;
       function fit() {
         var portrait = window.innerHeight >= window.innerWidth;
         var w = portrait ? screen.width : screen.height;
