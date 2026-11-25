@@ -20,7 +20,8 @@
   </script>
   <style>
     html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #0F4C36; overflow: hidden; touch-action: none; -webkit-user-select: none; user-select: none; }
-    #unity-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; display: block; background: #0F4C36; }
+    /* 画面いっぱい（上下左右を画面の端に合わせる。iPhoneのホーム画面アプリで 100vh が短くなり、下にすき間ができるため高さは指定しない） */
+    #unity-canvas { position: fixed; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%; display: block; background: #0F4C36; }
     #loading { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #FFD43B; font: 900 28px "Hiragino Sans", "Yu Gothic", sans-serif; background: #0F4C36; z-index: 2; }
     #bar { width: 60vw; height: 12px; background: rgba(255,255,255,.2); border-radius: 6px; margin-top: 16px; overflow: hidden; }
     #fill { width: 0; height: 100%; background: #FFD43B; }
@@ -54,15 +55,15 @@
 <body>
   <canvas id="unity-canvas" tabindex="-1"></canvas>
   <div id="loading">読み込み中… <span id="pct">0%</span><div id="bar"><div id="fill"></div></div></div>
-  <script src="Build/b1ef3b06ffe23d8eece1834665caac99.loader.js"></script>
+  <script src="Build/7674e256370a9ec6adbf1f8e3e14df2a.loader.js"></script>
   <script>
     var pct = document.getElementById("pct"), fill = document.getElementById("fill");
     if (window.pgOpeningOutside) {
       document.getElementById("loading").textContent = "ブラウザで開き直しています…";
     } else createUnityInstance(document.getElementById("unity-canvas"), {
-      dataUrl: "Build/b38a1ce8df63d2905f9b9436ed34e6ea.data.unityweb",
-      frameworkUrl: "Build/b2e434601151decea89651794b3ee5e6.framework.js.unityweb",
-      codeUrl: "Build/c5268120e201ba13f23f8e62600b3ca2.wasm.unityweb",
+      dataUrl: "Build/87a63fa35028cff8ed62c59665588732.data.unityweb",
+      frameworkUrl: "Build/6d2ba1eb524e973fdf414b9e6651fc09.framework.js.unityweb",
+      codeUrl: "Build/b32d416c1e3607712884fbed264e7ffb.wasm.unityweb",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "DefaultCompany",
       productName: "パーティーゲーム",
