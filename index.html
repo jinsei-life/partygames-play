@@ -8,6 +8,16 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="パーティー">
   <title>パーティーゲーム</title>
+  <script>
+    // LINE の中のブラウザは画面の向きの扱いが特殊で、縦持ちのときに表示が崩れる。
+    // アドレスの最後に openExternalBrowser=1 を付けると、LINE がいつものブラウザ（Chrome / Safari）で開き直してくれる。
+    (function () {
+      if (!/\sLine\//.test(navigator.userAgent)) return;
+      if (location.search.indexOf("openExternalBrowser=1") >= 0) return;
+      window.pgOpeningOutside = true;
+      location.href = location.pathname + location.search + (location.search ? "&" : "?") + "openExternalBrowser=1" + location.hash;
+    })();
+  </script>
   <style>
     html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #0F4C36; overflow: hidden; touch-action: none; -webkit-user-select: none; user-select: none; }
     #unity-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; display: block; background: #0F4C36; }
@@ -45,7 +55,9 @@
   <script src="Build/a72aa02776eb32174abe908a1b0e448d.loader.js"></script>
   <script>
     var pct = document.getElementById("pct"), fill = document.getElementById("fill");
-    createUnityInstance(document.getElementById("unity-canvas"), {
+    if (window.pgOpeningOutside) {
+      document.getElementById("loading").textContent = "ブラウザで開き直しています…";
+    } else createUnityInstance(document.getElementById("unity-canvas"), {
       dataUrl: "Build/ae1337434a353c6815efd9d1ebee27ab.data.unityweb",
       frameworkUrl: "Build/0ce2fca0be48da5b8808918c5b84bbba.framework.js.unityweb",
       codeUrl: "Build/75a348bbc7b6a0d6868d7b2899f28009.wasm.unityweb",
