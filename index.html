@@ -27,6 +27,8 @@
   </style>
   <!-- オンライン対戦（WebRTC）用。無料の PeerJS サーバーで相手を見つける -->
   <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+  <!-- 部屋に入るためのQRコードを作る -->
+  <script src="https://unpkg.com/qrcode-generator@1.4.4/qrcode.js"></script>
   <script>
     // 中継サーバー（Metered の無料 TURN）。直接つながれない組み合わせ（iPhone と Android など）を中継する。
     // パスワードが空のときは中継なし（直接つながれる組み合わせだけ）。
@@ -52,15 +54,15 @@
 <body>
   <canvas id="unity-canvas" tabindex="-1"></canvas>
   <div id="loading">読み込み中… <span id="pct">0%</span><div id="bar"><div id="fill"></div></div></div>
-  <script src="Build/a72aa02776eb32174abe908a1b0e448d.loader.js"></script>
+  <script src="Build/b1ef3b06ffe23d8eece1834665caac99.loader.js"></script>
   <script>
     var pct = document.getElementById("pct"), fill = document.getElementById("fill");
     if (window.pgOpeningOutside) {
       document.getElementById("loading").textContent = "ブラウザで開き直しています…";
     } else createUnityInstance(document.getElementById("unity-canvas"), {
-      dataUrl: "Build/ae1337434a353c6815efd9d1ebee27ab.data.unityweb",
-      frameworkUrl: "Build/0ce2fca0be48da5b8808918c5b84bbba.framework.js.unityweb",
-      codeUrl: "Build/75a348bbc7b6a0d6868d7b2899f28009.wasm.unityweb",
+      dataUrl: "Build/b38a1ce8df63d2905f9b9436ed34e6ea.data.unityweb",
+      frameworkUrl: "Build/b2e434601151decea89651794b3ee5e6.framework.js.unityweb",
+      codeUrl: "Build/c5268120e201ba13f23f8e62600b3ca2.wasm.unityweb",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "DefaultCompany",
       productName: "パーティーゲーム",
