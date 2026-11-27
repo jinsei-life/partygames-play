@@ -63,6 +63,28 @@
   <div id="loading">読み込み中… <span id="pct">0%</span><div id="bar"><div id="fill"></div></div></div>
   <script src="Build/eb66de2f24eee3cab575ae0e7c7220ab.loader.js"></script>
   <script>
+    // 時計の帯の分だけページを高くしているので、iPhoneが少しスクロールした状態で開くことがある。
+    // そうなると、見た目と指の位置が帯の分だけずれる（縦画面で起動したとき、ボタンの判定がずれる）。
+    // いつもページのいちばん上に戻して、Unity にも大きさを測り直してもらう。
+    (function () {
+      function top() {
+        if (window.scrollX || window.scrollY || document.documentElement.scrollTop || document.body.scrollTop) {
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+          window.dispatchEvent(new Event("resize"));
+        }
+      }
+      window.addEventListener("scroll", top, { passive: true });
+      window.addEventListener("resize", function () { setTimeout(top, 50); });
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener("scroll", top);
+        window.visualViewport.addEventListener("resize", function () { setTimeout(top, 50); });
+      }
+      [0, 300, 1000, 2500, 5000].forEach(function (t) { setTimeout(top, t); });
+    })();
+  </script>
+  <script>
     var pct = document.getElementById("pct"), fill = document.getElementById("fill");
     if (window.pgOpeningOutside) {
       document.getElementById("loading").textContent = "ブラウザで開き直しています…";
